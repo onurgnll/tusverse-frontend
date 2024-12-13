@@ -1,10 +1,28 @@
-import React from "react";
-import { AutoComplete, Button, Flex, Layout } from "antd";
+import React, { useEffect, useState } from "react";
+import { AutoComplete, Button, Flex, Input, Layout } from "antd";
 
 const { Content } = Layout;
 
-const App = () => {
+const Login = ({ onVerificationSuccess }) => {
   const [options, setOptions] = React.useState([]);
+  const [email, setEmail] = React.useState("");
+  const [isCodeSent, setIsCodeSent] = React.useState(false);
+  const [verificationCode, setVerificationCode] = React.useState("");
+  const [timer, setTimer] = useState(120);
+
+  useEffect(() => {
+    let interval;
+    if (isCodeSent && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      setIsCodeSent(false);
+      setTimer(120);
+    }
+    return () => clearInterval(interval);
+  }, [isCodeSent, timer]);
+
   const handleSearch = (value) => {
     setOptions(() => {
       if (!value || value.includes("@")) {
@@ -16,6 +34,24 @@ const App = () => {
       }));
     });
   };
+
+  const handleContinue = () => {
+    if (email) {
+      setIsCodeSent(true);
+      setTimer(120);
+      console.log(`Doğrulama kodu gönderildi: ${email}`);
+    }
+  };
+
+  const handleVerify = () => {
+    if (verificationCode === "1234") { // Örnek doğrulama kodu
+      alert("Kod doğrulandı!");
+      onVerificationSuccess(); 
+    } else {
+      alert("Kod hatalı!");
+    }
+  };
+
   return (
     <Layout
       style={{
@@ -46,11 +82,17 @@ const App = () => {
               fontSize: "30px",
             }}
           >
-            Kayıt Ol
+            Giriş Yap
           </h1>
-          <p style={{ fontFamily: "Arial", fontSize: "15px"}}>
-            E-posta hesabına kod gönderilecek
-          </p>
+          {isCodeSent ? (
+            <p style={{ fontFamily: "Arial", fontSize: "15px" }}>
+              Kod yeniden gönderilebilir: {timer} saniye
+            </p>
+          ) : (
+            <p style={{ fontFamily: "Arial", fontSize: "15px" }}>
+              E-posta hesabına kod gönderilecek
+            </p>
+          )}
           <AutoComplete
             style={{
               width: 350,
@@ -59,7 +101,21 @@ const App = () => {
             onSearch={handleSearch}
             placeholder="E-postanızı giriniz"
             options={options}
+            onSelect={(value) => setEmail(value)}
           />
+          {isCodeSent && timer > 0 && (
+            <Input
+              style={{
+                width: 350,
+                height: 45,
+                textAlign: "center",
+                marginTop: "15px",
+              }}
+              placeholder="Doğrulama kodunu giriniz"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+            />
+          )}
           <Flex
             vertical
             gap="small"
@@ -75,17 +131,17 @@ const App = () => {
                 marginBottom: "20px",
                 background: "#E7DFD5",
               }}
+              onClick={isCodeSent ? handleVerify : handleContinue}
             >
-              Devam
+              {isCodeSent ? "Doğrula" : "Devam"}
             </Button>
           </Flex>
-          <p style={{ fontFamily: "Arial", fontSize: "15px"}}>
-            Hesabın zaten var mı?
-            <a style={{color:"black", margin:"10px"}} href="/">Giriş Yap</a>
-          </p>
         </div>
       </Content>
     </Layout>
   );
 };
-export default App;
+
+export default Login;
+
+

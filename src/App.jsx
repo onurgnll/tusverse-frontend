@@ -1,13 +1,23 @@
-import React from "react";
-import Login from "./components/Login"
+import React, { useState } from "react";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
-function App() {
- 
+const App = () => {
+  const [isVerified, setIsVerified] = useState(false);
+
+  const handleVerificationSuccess = () => {
+    setIsVerified(true);
+  };
+
   return (
-    <>
-    <Login/>
-    </>
-  )
-}
+    <div>
+      {!isVerified ? (
+        <Login onVerificationSuccess={handleVerificationSuccess} />
+      ) : (
+        <Register />
+      )}
+    </div>
+  );
+};
 
-export default App
+export default App;
