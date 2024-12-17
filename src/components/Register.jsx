@@ -48,7 +48,7 @@ const App = () => {
           style={{ marginTop: "20px" }}
         >
           <Form.Item
-            label="Ad"
+            label="İsim"
             name="firstName"
             rules={[{ required: true, message: "Lütfen adınızı giriniz." }]}
           >
@@ -56,7 +56,7 @@ const App = () => {
           </Form.Item>
 
           <Form.Item
-            label="Soyad"
+            label="Soyisim"
             name="lastName"
             rules={[{ required: true, message: "Lütfen soyadınızı giriniz." }]}
           >
@@ -81,7 +81,7 @@ const App = () => {
               { required: true, message: "Lütfen T.C. Kimlik Numaranızı giriniz." },
               { pattern: /^\d{11}$/, message: "11 haneli bir sayı giriniz." },
             ]}
-          >
+          >11
             <Input placeholder="T.C. Kimlik Numaranızı giriniz" maxLength={11} />
           </Form.Item>
 
