@@ -1,0 +1,63 @@
+/* Menü öğeleri için oval kenar */
+.ant-menu-horizontal > .ant-menu-item,
+.ant-menu-horizontal > .ant-menu-submenu {
+  border-radius: 15px !important;
+  transition: all 0.5s ease-in-out;
+  color: black;
+  margin-right: 20px;
+  font-style:oblique;
+}
+
+/* Son öğenin sağ tarafında boşluk olmamasını sağlar */
+.ant-menu-horizontal > .ant-menu-item:last-child {
+  margin-right: 0;
+}
+
+/* Hover durumunda arka plan rengi */
+.ant-menu-horizontal > .ant-menu-item:hover,
+.ant-menu-horizontal > .ant-menu-submenu:hover {
+  background-color: #84A7A1 !important;
+  color: #fff !important;
+}
+
+/* Seçili öğe için oval kenar ve arka plan rengi */
+.ant-menu-horizontal > .ant-menu-item-selected {
+  background-color: #176B87 !important;
+  border-radius: 50px !important;
+  color: #fff !important;
+}
+
+/* Mobil menü (Drawer içindeki dikey menü) için aynı stiller */
+.ant-menu-vertical > .ant-menu-item,
+.ant-menu-vertical > .ant-menu-submenu {
+  border-radius: 50px !important;
+  background-color: transparent !important;
+}
+
+.ant-menu-vertical > .ant-menu-item:hover,
+.ant-menu-vertical > .ant-menu-submenu:hover {
+  background-color: #176B87 !important;
+  color: #fff !important;
+}
+
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none; /* Masaüstü menüyü gizle */
+  }
+
+  .mobile-menu-button {
+    display: flex; /* Hamburger menüyü göster */
+    margin-left: 10px;
+  }
+
+  .logo-image {
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu-button {
+    display: none; /* Hamburger menüyü gizle */
+  }
+}
